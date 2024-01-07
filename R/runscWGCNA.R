@@ -57,8 +57,8 @@ run.scWGCNA = function(p.cells,
     gnames= data.frame(x=rownames(p.cells),y=rownames(p.cells), row.names = rownames(p.cells))
   }  else {gnames = g.names; rownames(gnames) = gnames[1,]}
   
-  nonex = which(tabulate(s.Wdata@assays$RNA@counts@i + 1L,
-                         nrow(s.Wdata@assays$RNA@counts)) < min.cells)
+  nonex = which(tabulate(s.Wdata@assays$RNA$counts@i + 1L,
+                         nrow(s.Wdata@assays$RNA$counts)) < min.cells)
   
   # If no variable genes are provided
   if (missing(features)) {
@@ -67,7 +67,7 @@ run.scWGCNA = function(p.cells,
 
   if (is.pseudocell==T) {
     
-    datExpr=p.cells@assays[[Seurat::DefaultAssay(p.cells)]]@counts[Expr,]
+    datExpr=p.cells@assays[[Seurat::DefaultAssay(p.cells)]]$counts[Expr,]
     if (length(which(apply(datExpr, 1, var)>0))>0) {
       print(paste0("The following variable genes were not found expressed in the pseudocell object:  ",
                    names(which(Matrix::rowSums(datExpr)==0))))
